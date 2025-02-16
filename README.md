@@ -108,6 +108,34 @@ You can choose between 5 profiles depending on your hardware:
 
 Usualy the lower the profile the faster the generation.
 
+### API Server
+
+You could launch an API server locally, which you could post web request for Image/Text to 3D, Texturing existing mesh,
+and e.t.c.
+
+```bash
+python api_server.py --host 0.0.0.0 --port 8080
+```
+
+A demo post request for image to 3D without texture.
+
+```bash
+img_b64_str=$(base64 -i assets/demo.png)
+curl -X POST "http://localhost:8080/generate" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "image": "'"$img_b64_str"'",
+         }' \
+     -o test2.glb
+```
+
+### Blender Addon
+
+With an API server launched, you could also directly use Hunyuan3D 2.0 in your blender with
+our [Blender Addon](blender_addon.py). Please follow our tutorial to install and use.
+
+https://github.com/user-attachments/assets/8230bfb5-32b1-4e48-91f4-a977c54a4f3e
+
 ## Other GPU Poor Applications
 - HuanyuanVideoGP: https://github.com/deepbeepmeep/HunyuanVideoGP :\
 One of the best open source Text to Video generator
