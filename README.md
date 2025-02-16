@@ -27,6 +27,7 @@ https://github.com/deepbeepmeep/mmgp
 
 <br>
 
+
 > Join our **[Wechat](#)** and **[Discord](https://discord.gg/GuaWYwzKbX)** group to discuss and find help from us.
 
 | Wechat Group                                     | Xiaohongshu                                           | X                                           | Discord                                           |
@@ -46,11 +47,19 @@ https://github.com/deepbeepmeep/mmgp
 - Jan 22, 2025: 💬 Hunyuan3D-2.0GP by Deepbeepmeep: low VRAM support and unlocked text to 3D generator
 - Jan 21, 2025: 💬 Release [Hunyuan3D 2.0](https://huggingface.co/spaces/tencent/Hunyuan3D-2). Please give it a try!
 
-- Jan 23, 2025: 💬 We thank community members for creating [Windows installation tool](https://github.com/YanWenKun/Comfy3D-WinPortable/releases/tag/r8-hunyuan3d2), ComfyUI support with [ComfyUI-Hunyuan3DWrapper](https://github.com/kijai/ComfyUI-Hunyuan3DWrapper) and [ComfyUI-3D-Pack](https://github.com/MrForExample/ComfyUI-3D-Pack) and other awesome [extensions](#community-resources).
+- Feb 14, 2025: 🛠️ Release texture enhancement module, please obtain high-definition textures via [here](minimal_demo.py)!
+- Feb 3, 2025: 🐎
+  Release [Hunyuan3D-DiT-v2-0-Fast](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-dit-v2-0-fast), our
+  guidance distillation model that could half the dit inference time, see [here](minimal_demo.py) for usage.
+- Jan 27, 2025: 🛠️ Release Blender addon for Hunyuan3D 2.0, Check it out [here](#blender-addon).
+- Jan 23, 2025: 💬 We thank community members for
+  creating [Windows installation tool](https://github.com/YanWenKun/Hunyuan3D-2-WinPortable), ComfyUI support
+  with [ComfyUI-Hunyuan3DWrapper](https://github.com/kijai/ComfyUI-Hunyuan3DWrapper)
+  and [ComfyUI-3D-Pack](https://github.com/MrForExample/ComfyUI-3D-Pack) and other
+  awesome [extensions](#community-resources).
 - Jan 21, 2025: 💬 Enjoy exciting 3D generation on our website [Hunyuan3D Studio](https://3d.hunyuan.tencent.com)!
-- Jan 21, 2025: 💬 Release inference code and pretrained models
-  of [Hunyuan3D 2.0](https://huggingface.co/tencent/Hunyuan3D-2).
-- Jan 21, 2025: 💬 Release Hunyuan3D 2.0. Please give it a try
+- Jan 21, 2025: 🤗 Release inference code and pretrained models
+  of [Hunyuan3D 2.0](https://huggingface.co/tencent/Hunyuan3D-2). Please give it a try
   via [huggingface space](https://huggingface.co/spaces/tencent/Hunyuan3D-2) and
   our [official site](https://3d.hunyuan.tencent.com)!
 
@@ -184,17 +193,26 @@ Generation results of Hunyuan3D 2.0:
   <img src="assets/images/e2e-2.gif"  height=300>
 </p>
 
-### Pretrained Models
+## 🎁 Models Zoo
 
-| Model                  | Date       | Params | Huggingface                                                                             |
-|------------------------|------------|--------|-----------------------------------------------------------------------------------------| 
-| Hunyuan3D-DiT-v2-0     | 2025-01-21 | 2.6B   | [Download](https://huggingface.co/tencent/Hunyuan3D-2)                                  |
-| Hunyuan3D-Paint-v2-0   | 2025-01-21 | 1.3B   | [Download](https://huggingface.co/tencent/Hunyuan3D-2)                                  |
-| Hunyuan3D-Delight-v2-0 | 2025-01-21 | 1.3B   | [Download](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-delight-v2-0) | 
+It takes 11.5 GB VRAM for shape generation and 24.5 GB for shape and texture generation in total.
+
+| Model                   |    Description                         | Date       | Size | Huggingface                                                                              |
+|-------------------------|-----------------------------|------------|------|------------------------------------------------------------------------------------------| 
+| Hunyuan3D-DiT-v2-0-Fast | Guidance Distillation Model | 2025-02-03 | 2.6B | [Download](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-dit-v2-0-fast) |
+| Hunyuan3D-DiT-v2-0      | Image to Shape Model        | 2025-01-21 | 2.6B | [Download](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-dit-v2-0)      |
+| Hunyuan3D-Paint-v2-0    | Texture Generation Model    | 2025-01-21 | 1.3B | [Download](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-paint-v2-0)    |
+| Hunyuan3D-Delight-v2-0  | Image Delight Model         | 2025-01-21 | 1.3B | [Download](https://huggingface.co/tencent/Hunyuan3D-2/tree/main/hunyuan3d-delight-v2-0)  | 
 
 ## 🤗 Get Started with Hunyuan3D 2.0
 
-You may follow the next steps to use Hunyuan3D 2.0 via code or the Gradio App.
+You may follow the next steps to use Hunyuan3D 2.0 via:
+
+- [Code](#code-usage)
+- [Gradio App](#gradio-app)
+- [API Server](#api-server)
+- [Blender Addon](#blender-addon)
+- [Official Site](#official-site)
 
 ### Install Requirements
 To use the application on Windows (without WSL) you will need to install Microsoft Visual Studio 2022 or later. If you get an error during the execution of onr of the *python setup.py* below you will need to set the path to the C++ compiler by running the following script (once you have located the installation path of VS Studio which may differ):
@@ -216,10 +234,10 @@ cd hy3dgen/texgen/custom_rasterizer
 python3 setup.py install
 cd ../../..
 cd hy3dgen/texgen/differentiable_renderer
-bash compile_mesh_painter.sh OR python3 setup.py install (on Windows)
+python3 setup.py install
 ```
 
-### API Usage
+### Code Usage
 
 We designed a diffusers-like API to use our shape generation model - Hunyuan3D-DiT and texture synthesis model -
 Hunyuan3D-Paint.
@@ -262,6 +280,36 @@ pip3 install gradio==3.39.0
 python3 gradio_app.py
 ```
 
+### API Server
+
+You could launch an API server locally, which you could post web request for Image/Text to 3D, Texturing existing mesh,
+and e.t.c.
+
+```bash
+python api_server.py --host 0.0.0.0 --port 8080
+```
+
+A demo post request for image to 3D without texture.
+
+```bash
+img_b64_str=$(base64 -i assets/demo.png)
+curl -X POST "http://localhost:8080/generate" \
+     -H "Content-Type: application/json" \
+     -d '{
+           "image": "'"$img_b64_str"'",
+         }' \
+     -o test2.glb
+```
+
+### Blender Addon
+
+With an API server launched, you could also directly use Hunyuan3D 2.0 in your blender with
+our [Blender Addon](blender_addon.py). Please follow our tutorial to install and use.
+
+https://github.com/user-attachments/assets/8230bfb5-32b1-4e48-91f4-a977c54a4f3e
+
+### Official Site
+
 Don't forget to visit [Hunyuan3D](https://3d.hunyuan.tencent.com) for quick use, if you don't want to host yourself.
 
 ## 📑 Open-Source Plan
@@ -299,11 +347,11 @@ If you found this repository helpful, please cite our report:
 
 Thanks for the contributions of community members, here we have these great extensions of Hunyuan3D 2.0:
 
-- [ComfyUI-3D-Pack](https://github.com/MrForExample/ComfyUI-3D-Pack) 
+- [ComfyUI-3D-Pack](https://github.com/MrForExample/ComfyUI-3D-Pack)
 - [ComfyUI-Hunyuan3DWrapper](https://github.com/kijai/ComfyUI-Hunyuan3DWrapper)
 - [Hunyuan3D-2-for-windows](https://github.com/sdbds/Hunyuan3D-2-for-windows)
-- [📦 A bundle for running on Windows | 整合包](https://github.com/YanWenKun/Comfy3D-WinPortable/releases/tag/r8-hunyuan3d2)
-
+- [📦 A bundle for running on Windows | 整合包](https://github.com/YanWenKun/Hunyuan3D-2-WinPortable)
+- [Hunyuan3D-2GP](https://github.com/deepbeepmeep/Hunyuan3D-2GP)
 
 ## Acknowledgements
 
