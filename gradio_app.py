@@ -370,10 +370,14 @@ if __name__ == '__main__':
     example_is = get_example_img_list()
     example_ts = get_example_txt_list()
     torch.set_default_device("cpu")
+
     try:
         from hy3dgen.texgen import Hunyuan3DPaintPipeline
+        print("step -2")
 
         texgen_worker = Hunyuan3DPaintPipeline.from_pretrained('tencent/Hunyuan3D-2')
+        print("step -1")
+
         HAS_TEXTUREGEN = True
     except Exception as e:
         print(e)
@@ -398,13 +402,15 @@ if __name__ == '__main__':
     floater_remove_worker = FloaterRemover()
     degenerate_face_remove_worker = DegenerateFaceRemover()
     face_reduce_worker = FaceReducer()
-  
+    print("step 0")
     profile = int(args.profile) 
     kwargs = {}
     pipe = offload.extract_models("i23d_worker", i23d_worker)
     if HAS_TEXTUREGEN:
         pipe.update(  offload.extract_models( "texgen_worker", texgen_worker))
         texgen_worker.models["multiview_model"].pipeline.vae.use_slicing = True
+        #texgen_worker.models["super_model"].pipeline.vae.use_slicing = True
+
     if HAS_T2I:
         pipe.update(  offload.extract_models( "t2i_worker", t2i_worker))
         

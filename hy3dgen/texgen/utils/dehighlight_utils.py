@@ -41,9 +41,9 @@ class Light_Shadow_Remover():
             safety_checker=None,
         )
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(pipeline.scheduler.config)
-        pipeline.set_progress_bar_config(disable=True)
+        pipeline.set_progress_bar_config(disable=False)
 
-        self.pipeline = pipeline.to(self.device, torch.float16) # todo: check if self.device is CPU in the gpu poor version
+        self.pipeline = pipeline
     
     def recorrect_rgb(self, src_image, target_image, alpha_channel, scale=0.95):
         

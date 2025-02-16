@@ -47,7 +47,7 @@ class Multiview_Diffusion_Net():
         pipeline.scheduler = EulerAncestralDiscreteScheduler.from_config(pipeline.scheduler.config,
                                                                          timestep_spacing='trailing')
 
-        pipeline.set_progress_bar_config(disable=True)
+        pipeline.set_progress_bar_config(disable=False)
         self.pipeline = pipeline #.to(self.device) # only for cosmetics and not display the warning 
 
     def seed_everything(self, seed):

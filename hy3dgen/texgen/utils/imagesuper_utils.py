@@ -27,18 +27,20 @@ from diffusers import StableDiffusionUpscalePipeline
 
 class Image_Super_Net():
     def __init__(self, config):
-        self.up_pipeline_x4 = StableDiffusionUpscalePipeline.from_pretrained(
+        self.pipeline = StableDiffusionUpscalePipeline.from_pretrained(
                         'stabilityai/stable-diffusion-x4-upscaler',
-                        torch_dtype=torch.float16,
-                    ).to(config.device)
-        self.up_pipeline_x4.set_progress_bar_config(disable=True)
+                        #torch_dtype=torch.float16,
+                    )
+        self.pipeline.set_progress_bar_config(disable=False)
+
 
     def __call__(self, image, prompt=''):
         with torch.no_grad():
-            upscaled_image = self.up_pipeline_x4(
+            print("start upscale")
+            upscaled_image = self.pipeline(
                 prompt=[prompt],
                 image=image,
-                num_inference_steps=5,
+                num_inference_steps=4,
             ).images[0]
-
+            print("end upscale")
         return upscaled_image

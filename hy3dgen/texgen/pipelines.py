@@ -95,7 +95,7 @@ class Hunyuan3DPaintPipeline:
         self.load_models()
 
     def load_models(self):
-        # empty cude cache
+        # empty cuda cache
         torch.cuda.empty_cache()
         # Load model
         self.models['delight_model'] = Light_Shadow_Remover(self.config)
@@ -208,10 +208,13 @@ class Hunyuan3DPaintPipeline:
         camera_info = [(((azim // 30) + 9) % 12) // {-20: 1, 0: 1, 20: 1, -90: 3, 90: 3}[
             elev] + {-20: 0, 0: 12, 20: 24, -90: 36, 90: 40}[elev] for azim, elev in
                        zip(selected_camera_azims, selected_camera_elevs)]
-        multiviews = self.models['multiview_model'](image_prompt, normal_maps + position_maps, camera_info)
+        multiviews = self.models['multiview_model'](image_prompt, normal_maps + position_maps, camera_info).to("cpu")
 
         for i in range(len(multiviews)):
-            multiviews[i] = self.models['super_model'](multiviews[i])
+            print("upscale sub 1")
+            multiviews[i] = self.models['super_model'](multiviews[i]).to("cpu") # todo: look at this one more time ?
+            print("upscale sub 2")
+
             multiviews[i] = multiviews[i].resize(
                 (self.config.render_size, self.config.render_size))
 
